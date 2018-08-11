@@ -27,8 +27,8 @@ class ViewController: UIViewController {
     var counterRight = false
     var gravLabel = UILabel()
     var direction = "Zero"
-    var friend = UIView()
-    var target = UIView()
+    var bigGuy = UIView()
+    var smallGuy = UIView()
     var pointsLabel = UILabel()
     var points = 0
     var instructions = UILabel()
@@ -169,13 +169,13 @@ class ViewController: UIViewController {
         self.shadowF.backgroundColor = UIColor.clear
         self.shadowF.layer.cornerRadius = 9
         
-        self.friend.frame.size.width = self.view.bounds.width/4
-        self.friend.frame.size.height = self.view.bounds.width/4
-        self.friend.backgroundColor = UIColor.clear
-        self.friend.layer.cornerRadius = 9
+        self.bigGuy.frame.size.width = self.view.bounds.width/4
+        self.bigGuy.frame.size.height = self.view.bounds.width/4
+        self.bigGuy.backgroundColor = UIColor.clear
+        self.bigGuy.layer.cornerRadius = 9
         var e = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
         var f = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
-        self.friend.center = CGPoint(x: e, y: f)
+        self.bigGuy.center = CGPoint(x: e, y: f)
         
         self.shadowT.frame.size.height = self.view.bounds.width/10
         self.shadowT.frame.size.width = self.view.bounds.width/10
@@ -184,11 +184,11 @@ class ViewController: UIViewController {
         
         var a = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
         var b = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
-        self.target.center = CGPoint(x: a, y: b)
-        self.target.frame.size.height = self.view.bounds.width/10
-        self.target.frame.size.width = self.view.bounds.width/10
-        self.target.backgroundColor = UIColor.clear
-        self.target.layer.cornerRadius = 4
+        self.smallGuy.center = CGPoint(x: a, y: b)
+        self.smallGuy.frame.size.height = self.view.bounds.width/10
+        self.smallGuy.frame.size.width = self.view.bounds.width/10
+        self.smallGuy.backgroundColor = UIColor.clear
+        self.smallGuy.layer.cornerRadius = 4
         
         self.middle.frame = CGRect(x:(self.view.frame.width/3) + 5, y:10, width: (self.view.bounds.width/3) - 10, height: (self.view.bounds.height) - 20)
         self.middle.layer.cornerRadius = 8
@@ -241,8 +241,8 @@ class ViewController: UIViewController {
         self.view.addSubview(self.five)
         self.view.addSubview(self.ten)
         
-        self.view.addSubview(self.target)
-        self.view.addSubview(self.friend)
+        self.view.addSubview(self.smallGuy)
+        self.view.addSubview(self.bigGuy)
         self.view.addSubview(self.square)
         self.view.addSubview(self.shadowS)
         self.view.addSubview(self.shadowF)
@@ -326,41 +326,41 @@ class ViewController: UIViewController {
         var x = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
         var y = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
         
-        if (friend.frame.intersects(target.frame)) && bugCount < 1 {
+        if (bigGuy.frame.intersects(smallGuy.frame)) && bugCount < 1 {
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: .allowAnimatedContent, animations: {
                 
-                self.collision.removeItem(self.target)
-                self.target.backgroundColor = UIColor.clear
-                self.target.alpha = 0
-                self.target.center = CGPoint(x: x, y: y)
+                self.collision.removeItem(self.smallGuy)
+                self.smallGuy.backgroundColor = UIColor.clear
+                self.smallGuy.alpha = 0
+                self.smallGuy.center = CGPoint(x: x, y: y)
                 
             }, completion: nil)
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: .allowAnimatedContent, animations: {
-                self.target.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
-                self.target.alpha = 1
-                self.collision.addItem(self.target)
+                self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
+                self.smallGuy.alpha = 1
+                self.collision.addItem(self.smallGuy)
             }, completion: nil)
             
-        } else if (friend.frame.intersects(target.frame)) && playing == true && counter > 0 && isPaused == false {
+        } else if (bigGuy.frame.intersects(smallGuy.frame)) && playing == true && counter > 0 && isPaused == false {
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: .allowAnimatedContent, animations: {
                 
                 self.points += 1
                 self.pointsLabel.text = "\(self.points)"
                 
-                self.collision.removeItem(self.target)
-                self.target.backgroundColor = UIColor.clear
-                self.target.alpha = 0
-                self.target.center = CGPoint(x: x, y: y)
+                self.collision.removeItem(self.smallGuy)
+                self.smallGuy.backgroundColor = UIColor.clear
+                self.smallGuy.alpha = 0
+                self.smallGuy.center = CGPoint(x: x, y: y)
                 
             }, completion: nil)
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: .allowAnimatedContent, animations: {
-                self.target.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
-                self.target.alpha = 1
-                self.collision.addItem(self.target)
+                self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
+                self.smallGuy.alpha = 1
+                self.collision.addItem(self.smallGuy)
             }, completion: nil)
             
         }
@@ -385,17 +385,17 @@ class ViewController: UIViewController {
                 self.shadowS.transform.c = self.square.transform.c
                 self.shadowS.transform.d = self.square.transform.d
                 
-                self.shadowF.center = self.friend.center
-                self.shadowF.transform.a = self.friend.transform.a
-                self.shadowF.transform.b = self.friend.transform.b
-                self.shadowF.transform.c = self.friend.transform.c
-                self.shadowF.transform.d = self.friend.transform.d
+                self.shadowF.center = self.bigGuy.center
+                self.shadowF.transform.a = self.bigGuy.transform.a
+                self.shadowF.transform.b = self.bigGuy.transform.b
+                self.shadowF.transform.c = self.bigGuy.transform.c
+                self.shadowF.transform.d = self.bigGuy.transform.d
                 
-                self.shadowT.center = self.target.center
-                self.shadowT.transform.a = self.target.transform.a
-                self.shadowT.transform.b = self.target.transform.b
-                self.shadowT.transform.c = self.target.transform.c
-                self.shadowT.transform.d = self.target.transform.d
+                self.shadowT.center = self.smallGuy.center
+                self.shadowT.transform.a = self.smallGuy.transform.a
+                self.shadowT.transform.b = self.smallGuy.transform.b
+                self.shadowT.transform.c = self.smallGuy.transform.c
+                self.shadowT.transform.d = self.smallGuy.transform.d
                 
             }, completion: nil)
             
@@ -406,7 +406,7 @@ class ViewController: UIViewController {
         }
         
         if playing == false {
-            target.alpha = 0
+            smallGuy.alpha = 0
             playAgain.alpha = 0
             restart.alpha = 0
         }
@@ -441,10 +441,10 @@ class ViewController: UIViewController {
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
                 var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.friend.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
                 self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
-                self.target.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
-                self.target.alpha = 1
+                self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
+                self.smallGuy.alpha = 1
                 self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
                 self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
                 self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
@@ -522,10 +522,10 @@ class ViewController: UIViewController {
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
                 var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.friend.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
                 self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
-                self.target.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
-                self.target.alpha = 1
+                self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
+                self.smallGuy.alpha = 1
                 self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
                 self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
                 self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
@@ -584,10 +584,10 @@ class ViewController: UIViewController {
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
                 var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.friend.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
                 self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
-                self.target.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
-                self.target.alpha = 1
+                self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
+                self.smallGuy.alpha = 1
                 self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
                 self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
                 self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
@@ -633,8 +633,8 @@ class ViewController: UIViewController {
         animator?.addBehavior(collision);
         
         collision.addItem(square)
-        collision.addItem(friend)
-        collision.addItem(target)
+        collision.addItem(bigGuy)
+        collision.addItem(smallGuy)
         
         collision.translatesReferenceBoundsIntoBoundary = true
         gravity.addItem(square);
