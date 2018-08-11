@@ -46,9 +46,9 @@ class ViewController: UIViewController {
     var one = UILabel()
     var five = UILabel()
     var ten = UILabel()
-    var shadowS = UIView()
-    var shadowF = UIView()
-    var shadowT = UIView()
+    var shadowSquare = UIView()
+    var shadowBigGuy = UIView()
+    var shadowSmallGuy = UIView()
     var bugCount = 0
     var pause = UIButton()
     var pause2 = UIButton()
@@ -151,10 +151,10 @@ class ViewController: UIViewController {
         self.pointsLabel.font = UIFont.italicSystemFont(ofSize: self.view.bounds.width/4)
         self.pointsLabel.alpha = 0
         
-        self.shadowS.frame.size.width = (self.view.bounds.width/25)*4
-        self.shadowS.frame.size.height = (self.view.bounds.width/25)*4
-        self.shadowS.backgroundColor = UIColor.clear
-        self.shadowS.layer.cornerRadius = 8
+        self.shadowSquare.frame.size.width = (self.view.bounds.width/25)*4
+        self.shadowSquare.frame.size.height = (self.view.bounds.width/25)*4
+        self.shadowSquare.backgroundColor = UIColor.clear
+        self.shadowSquare.layer.cornerRadius = 8
         
         self.square.frame.size.width = (self.view.bounds.width/25)*4
         self.square.frame.size.height = (self.view.bounds.width/25)*4
@@ -164,10 +164,10 @@ class ViewController: UIViewController {
         self.square.center = CGPoint(x: c, y: d)
         self.square.layer.cornerRadius = 8
         
-        self.shadowF.frame.size.width = self.view.bounds.width/4
-        self.shadowF.frame.size.height = self.view.bounds.width/4
-        self.shadowF.backgroundColor = UIColor.clear
-        self.shadowF.layer.cornerRadius = 9
+        self.shadowBigGuy.frame.size.width = self.view.bounds.width/4
+        self.shadowBigGuy.frame.size.height = self.view.bounds.width/4
+        self.shadowBigGuy.backgroundColor = UIColor.clear
+        self.shadowBigGuy.layer.cornerRadius = 9
         
         self.bigGuy.frame.size.width = self.view.bounds.width/4
         self.bigGuy.frame.size.height = self.view.bounds.width/4
@@ -177,10 +177,10 @@ class ViewController: UIViewController {
         var f = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
         self.bigGuy.center = CGPoint(x: e, y: f)
         
-        self.shadowT.frame.size.height = self.view.bounds.width/10
-        self.shadowT.frame.size.width = self.view.bounds.width/10
-        self.shadowT.backgroundColor = UIColor.clear
-        self.shadowT.layer.cornerRadius = 4
+        self.shadowSmallGuy.frame.size.height = self.view.bounds.width/10
+        self.shadowSmallGuy.frame.size.width = self.view.bounds.width/10
+        self.shadowSmallGuy.backgroundColor = UIColor.clear
+        self.shadowSmallGuy.layer.cornerRadius = 4
         
         var a = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
         var b = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
@@ -244,9 +244,9 @@ class ViewController: UIViewController {
         self.view.addSubview(self.smallGuy)
         self.view.addSubview(self.bigGuy)
         self.view.addSubview(self.square)
-        self.view.addSubview(self.shadowS)
-        self.view.addSubview(self.shadowF)
-        self.view.addSubview(self.shadowT)
+        self.view.addSubview(self.shadowSquare)
+        self.view.addSubview(self.shadowBigGuy)
+        self.view.addSubview(self.shadowSmallGuy)
         
         self.view.addSubview(time)
         self.view.addSubview(self.pointsLabel)
@@ -295,7 +295,7 @@ class ViewController: UIViewController {
     @objc func new() {
         
         counter = -3
-        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: false)
+        _ = timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: false)
         
         points = 0
         self.pointsLabel.text = "\(self.points)"
@@ -323,8 +323,8 @@ class ViewController: UIViewController {
     }
     
     @objc func hit() {
-        var x = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
-        var y = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
+        let x = Int(arc4random_uniform(UInt32(self.view.bounds.width)))
+        let y = Int(arc4random_uniform(UInt32(self.view.bounds.height)))
         
         if (bigGuy.frame.intersects(smallGuy.frame)) && bugCount < 1 {
             
@@ -379,23 +379,23 @@ class ViewController: UIViewController {
             
             UIView.animate(withDuration: 0, delay: 0.05, usingSpringWithDamping: 3, initialSpringVelocity: 3, options: .allowUserInteraction, animations: {
                 
-                self.shadowS.center = self.square.center
-                self.shadowS.transform.a = self.square.transform.a
-                self.shadowS.transform.b = self.square.transform.b
-                self.shadowS.transform.c = self.square.transform.c
-                self.shadowS.transform.d = self.square.transform.d
+                self.shadowSquare.center = self.square.center
+                self.shadowSquare.transform.a = self.square.transform.a
+                self.shadowSquare.transform.b = self.square.transform.b
+                self.shadowSquare.transform.c = self.square.transform.c
+                self.shadowSquare.transform.d = self.square.transform.d
                 
-                self.shadowF.center = self.bigGuy.center
-                self.shadowF.transform.a = self.bigGuy.transform.a
-                self.shadowF.transform.b = self.bigGuy.transform.b
-                self.shadowF.transform.c = self.bigGuy.transform.c
-                self.shadowF.transform.d = self.bigGuy.transform.d
+                self.shadowBigGuy.center = self.bigGuy.center
+                self.shadowBigGuy.transform.a = self.bigGuy.transform.a
+                self.shadowBigGuy.transform.b = self.bigGuy.transform.b
+                self.shadowBigGuy.transform.c = self.bigGuy.transform.c
+                self.shadowBigGuy.transform.d = self.bigGuy.transform.d
                 
-                self.shadowT.center = self.smallGuy.center
-                self.shadowT.transform.a = self.smallGuy.transform.a
-                self.shadowT.transform.b = self.smallGuy.transform.b
-                self.shadowT.transform.c = self.smallGuy.transform.c
-                self.shadowT.transform.d = self.smallGuy.transform.d
+                self.shadowSmallGuy.center = self.smallGuy.center
+                self.shadowSmallGuy.transform.a = self.smallGuy.transform.a
+                self.shadowSmallGuy.transform.b = self.smallGuy.transform.b
+                self.shadowSmallGuy.transform.c = self.smallGuy.transform.c
+                self.shadowSmallGuy.transform.d = self.smallGuy.transform.d
                 
             }, completion: nil)
             
@@ -440,14 +440,14 @@ class ViewController: UIViewController {
                 self.gravLabel.alpha = 0.5
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
-                var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
-                self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+                self.square.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.shadowSquare.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
                 self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
                 self.smallGuy.alpha = 1
-                self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
-                self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
-                self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
+                self.shadowSmallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
+                self.shadowBigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
                 self.view.backgroundColor = UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1)
                 self.view.willRemoveSubview(self.tapToPlay)
             }, completion: nil)
@@ -521,14 +521,14 @@ class ViewController: UIViewController {
                 self.gravLabel.alpha = 0.5
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
-                var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
-                self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+                self.square.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.shadowSquare.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
                 self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
                 self.smallGuy.alpha = 1
-                self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
-                self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
-                self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
+                self.shadowSmallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
+                self.shadowBigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
                 self.view.backgroundColor = UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1)
                 self.view.willRemoveSubview(self.tapToPlay)
             }, completion: nil)
@@ -583,14 +583,14 @@ class ViewController: UIViewController {
                 self.gravLabel.alpha = 0.5
                 self.pointsLabel.alpha = 0.9
                 self.score.alpha = 0.5
-                var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
-                self.shadowF.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+                self.square.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.9)
+                self.shadowSquare.backgroundColor = UIColor(displayP3Red: 0.95, green: 0.95, blue: 1, alpha: 0.6)
                 self.smallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.5)
                 self.smallGuy.alpha = 1
-                self.shadowT.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
-                self.square.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
-                self.shadowS.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
+                self.shadowSmallGuy.backgroundColor = UIColor(displayP3Red: 1, green: 0.2, blue: 0.2, alpha: 0.2)
+                self.bigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.5)
+                self.shadowBigGuy.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.3, blue: 1, alpha: 0.2)
                 self.view.backgroundColor = UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1)
                 self.view.willRemoveSubview(self.tapToPlay)
             }, completion: nil)
