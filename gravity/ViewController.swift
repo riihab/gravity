@@ -212,12 +212,12 @@ class ViewController: UIViewController {
         self.restart.alpha = 0
         
         self.pause.frame = CGRect(x: 20, y: self.view.bounds.height/20, width: self.view.bounds.width/20, height: self.view.bounds.width/6)
-        self.pause.layer.cornerRadius = 3
+        self.pause.layer.cornerRadius = 1
         self.pause.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.9)
         self.pause.addTarget(self, action: #selector(self.pauseGame), for: .touchUpInside)
         
         self.pause2.frame = CGRect(x: 45, y: self.view.bounds.height/20, width: self.view.bounds.width/20, height: self.view.bounds.width/6)
-        self.pause2.layer.cornerRadius = 3
+        self.pause2.layer.cornerRadius = 1
         self.pause2.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.9)
         self.pause2.addTarget(self, action: #selector(self.pauseGame), for: .touchUpInside)
         
