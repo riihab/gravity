@@ -225,7 +225,7 @@ class ViewController: UIViewController {
             
             let gradient:CAGradientLayer = CAGradientLayer()
             gradient.frame.size = self.view.frame.size
-            gradient.colors = [UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1).cgColor,UIColor(displayP3Red: 1, green: 0.7, blue: 0.7, alpha: 1).cgColor]
+            gradient.colors = [UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1).cgColor,UIColor(displayP3Red: 1, green: 0.5, blue: 0.5, alpha: 1).cgColor]
             self.view.layer.addSublayer(gradient)
             
         }
