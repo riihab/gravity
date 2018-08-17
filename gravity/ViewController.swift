@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     var score = UILabel()
     var restart = UIButton()
     var playAgain = UILabel()
-    var option = 0
+    var aim = 0
     var one = UILabel()
     var five = UILabel()
     var ten = UILabel()
@@ -232,7 +232,11 @@ class ViewController: UIViewController {
         
         addGradient()
         
-        self.view.backgroundColor = UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1)
+        //self.view.backgroundColor = UIColor(displayP3Red: 1, green: 0.9, blue: 0.9, alpha: 1)
+        
+        self.view.addSubview(self.middle)
+        self.view.addSubview(self.right)
+        self.view.addSubview(self.left)
         
         self.view.addSubview(self.tapToPlay)
         self.view.addSubview(self.tapToPlay2)
@@ -253,9 +257,6 @@ class ViewController: UIViewController {
         self.view.addSubview(self.gravLabel)
         self.view.addSubview(self.score)
         
-        self.view.addSubview(self.middle)
-        self.view.addSubview(self.right)
-        self.view.addSubview(self.left)
         self.view.addSubview(restart)
         self.view.addSubview(playAgain)
         self.view.addSubview(pause)
@@ -312,10 +313,8 @@ class ViewController: UIViewController {
     }
     
     @objc func update() {
-        if points > option {
+        if points > aim {
             
-        } else if points < 0 {
-            counter = 0
         } else if isPaused == false {
             counter += 1
             time.text = "\(counter)"
@@ -334,6 +333,7 @@ class ViewController: UIViewController {
                 self.smallGuy.backgroundColor = UIColor.clear
                 self.smallGuy.alpha = 0
                 self.smallGuy.center = CGPoint(x: x, y: y)
+                self.collision.addItem(self.smallGuy)
                 
             }, completion: nil)
             
@@ -365,7 +365,7 @@ class ViewController: UIViewController {
             
         }
         
-        if points > option {
+        if points > aim {
             UIView.animate(withDuration: 5, delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 3, options: .allowUserInteraction, animations: {
                 self.time.frame = CGRect(x:0, y:self.view.bounds.height/2 - 240, width: self.view.bounds.width, height: 500)
                 self.time.font = UIFont.systemFont(ofSize: 150)
@@ -399,17 +399,7 @@ class ViewController: UIViewController {
                 
             }, completion: nil)
             
-        } while points < option
-        
-        if points != 0 && playing == false {
-            
-        }
-        
-        if playing == false {
-            smallGuy.alpha = 0
-            playAgain.alpha = 0
-            restart.alpha = 0
-        }
+        } while points < 0          // I HAVE NO IDEA HOW THIS WORKS
         
     }
     
@@ -425,8 +415,8 @@ class ViewController: UIViewController {
             }, completion: nil) }
         
         if playing == false {
-            option = 4
             playing = true
+            aim = 4
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 3, options: .allowUserInteraction, animations: {
                 self.middle.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
                 self.left.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
@@ -507,7 +497,7 @@ class ViewController: UIViewController {
         
         if playing == false && isPaused == false {
             playing = true
-            option = 0
+            aim = 0
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 3, options: .allowUserInteraction, animations: {
                 self.middle.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
                 self.left.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
@@ -567,9 +557,9 @@ class ViewController: UIViewController {
                 
             }, completion: nil) }
         
-        if playing == false {
+        if playing == false && isPaused == false {
             playing = true
-            option = 9
+            aim = 9
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 3, initialSpringVelocity: 3, options: .allowUserInteraction, animations: {
                 self.middle.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
                 self.left.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0.2)
